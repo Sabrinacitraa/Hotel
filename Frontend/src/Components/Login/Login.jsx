@@ -32,6 +32,7 @@ const Login = () => {
       } else {
         alert("Login failed");
       }
+      
     } catch (error) {
       alert("Error login");
       console.log(error);
