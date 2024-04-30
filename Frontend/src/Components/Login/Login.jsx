@@ -22,14 +22,17 @@ const Login = () => {
       if (data) {
         sessionStorage.setItem("Token", data.token);
         localStorage.setItem("Data user", JSON.stringify(data.data));
-
-        const getUser = 
-
+        const getUser = localStorage.getItem("customer")
         alert("Login success");
-        window.location.href = '/'; // Menggunakan navigate dari useNavigate untuk mengarahkan pengguna ke halaman booking
+        if(getUser) {
+          window.location.href = '/'; // Menggunakan navigate dari useNavigate untuk mengarahkan pengguna ke halaman booking
+        } else {
+          window.location.href = '/admin'
+        }
       } else {
         alert("Login failed");
       }
+      
     } catch (error) {
       alert("Error login");
       console.log(error);
