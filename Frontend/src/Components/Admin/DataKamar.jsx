@@ -1,81 +1,61 @@
 import React, { useState } from 'react';
-import Header from '../Admin/Header';
-import Sidebar from '../Admin/Sidebar';
-import '../../App.css'; 
-import { AiOutlineSetting, AiOutlineDelete } from 'react-icons/ai';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import { AiOutlineDelete } from 'react-icons/ai';
+import '../../App.css';
 
-function DataKamar() {
+function Transaksi() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [rooms, setRooms] = useState([
-    { id: 1, number: 101, type: 'Single', room: 'A101', status: 'Available', price: 100 },
-    { id: 2, number: 102, type: 'Double', room: 'A102', status: 'Booked', price: 150 },
-    { id: 3, number: 103, type: 'Single', room: 'A103', status: 'Available', price: 120 },
-  ]);
 
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
+  const transactions = [
+    { id: 1, no: 1, invoice: 'INV001', customer: 'John Doe', total: 500, status: 'Pending', proof: 'payment_proof1.jpg' },
+    { id: 2, no: 2, invoice: 'INV002', customer: 'Jane Doe', total: 700, status: 'Paid', proof: 'payment_proof2.jpg' },
+  ];
 
-  const handleAddRoom = () => {
-    console.log('Add Room button clicked');
-  };
-
-  const handleDeleteRoom = (id) => {
-    console.log(`Room with ID ${id} deleted`);
-    setRooms(rooms.filter(room => room.id !== id));
+  const handleDeleteTransaction = (id) => {
+    console.log(`Transaction with ID ${id} deleted`);
   };
 
   return (
     <div className='grid-container'>
-      <Header OpenSidebar={OpenSidebar} />
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar} />
+      <Header OpenSidebar={OpenSidebar}/>
+      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
 
-      {/* <div className="data-kamar-options">
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="search-input"
-        />
-        <button onClick={handleAddRoom} className="add-room-button">
-          Add Room
-        </button>
-      </div> */}
-
-      <table className="room-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Room Type</th>
-            <th>Room</th>
-            <th>Status</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rooms.map(room => (
-            <tr key={room.id}>
-              <td>{room.number}</td>
-              <td>{room.type}</td>
-              <td>{room.room}</td>
-              <td>{room.status}</td>
-              <td>{room.price}</td>
-              <td>
-                <button onClick={() => handleDeleteRoom(room.id)}><AiOutlineDelete /></button>
-              </td>
+      <div className="transaksi-container">
+        <table className="transaksi-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Invoice</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Bukti Pembayaran</th>
+              <th>Hapus</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {transactions.map(transaction => (
+              <tr key={transaction.id}>
+                <td>{transaction.no}</td>
+                <td>{transaction.invoice}</td>
+                <td>{transaction.customer}</td>
+                <td>{transaction.total}</td>
+                <td>{transaction.status}</td>
+                <td><img src={transaction.proof} alt="Payment Proof" className="payment-proof" /></td>
+                <td><button onClick={() => handleDeleteTransaction(transaction.id)}><AiOutlineDelete className='icon'/></button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+      </div>
     </div>
   );
 }
 
-export default DataKamar;
+export default Transaksi;
